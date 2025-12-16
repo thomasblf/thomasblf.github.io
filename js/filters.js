@@ -18,10 +18,10 @@ fetch('data/photos.json')
 function afficherPhotosBatch() {
   const galerie = document.getElementById('galerie');
 
-  // Si on est au début, on peut vider la galerie
   if (index === 0) galerie.innerHTML = '';
 
   const batch = photosFiltrees.slice(index, index + batchSize);
+
   batch.forEach(p => {
     galerie.innerHTML += `
       <div class="photo">
@@ -33,6 +33,16 @@ function afficherPhotosBatch() {
   });
 
   index += batchSize;
+
+  // ✅ NOUVEAU : remplir l’écran automatiquement
+  requestAnimationFrame(() => {
+    if (
+      document.body.scrollHeight <= window.innerHeight &&
+      index < photosFiltrees.length
+    ) {
+      afficherPhotosBatch();
+    }
+  });
 }
 
 // Fonction pour remplir l'écran si trop peu de photos
@@ -80,3 +90,4 @@ function appliquerFiltres() {
   afficherPhotosBatch();
   remplirEcran(); // s'assure que la page reste remplie après filtrage
 }
+
