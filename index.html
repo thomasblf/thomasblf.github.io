@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Ma Galerie Photo</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+<header>
+  <h1>Ma Galerie Photo</h1>
+</header>
+
+<section id="filtres">
+  <label>Famille :
+    <select id="filtre-famille">
+      <option value="">Toutes</option>
+    </select>
+  </label>
+
+  <label>Espèce :
+    <select id="filtre-espece">
+      <option value="">Toutes</option>
+    </select>
+  </label>
+</section>
+
+<main id="galerie"></main>
+
+<section id="tri">
+  <button onclick="trierParDate('asc')">Trier par date ?</button>
+  <button onclick="trierParDate('desc')">Trier par date ?</button>
+</section>
+
+<script src="js/filters.js"></script>
+<script src="js/sort.js"></script>
+<script src="js/lightbox.js"></script>
+</body>
+</html>
