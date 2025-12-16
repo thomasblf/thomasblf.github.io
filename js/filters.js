@@ -1,29 +1,47 @@
 let photos = [];
+let index = 0;           // position actuelle dans le tableau filtré
+const batchSize = 2;     // nombre de photos à afficher à la fois
+let photosFiltrees = []; // tableau des photos après application des filtres
 
 // Charger les données
 fetch('data/photos.json')
   .then(r => r.json())
   .then(data => {
     photos = data;
-    afficherPhotos(photos);
+    photosFiltrees = photos; // au départ, toutes les photos sont visibles
+    afficherPhotosBatch();   // affiche le premier batch
     remplirFiltres(photos);
   });
 
-// Affichage galerie
-function afficherPhotos(liste) {
+// Affichage galerie par batch
+function afficherPhotosBatch() {
   const galerie = document.getElementById('galerie');
-  galerie.innerHTML = '';
 
-  liste.forEach(p => {
+  // Si on est au début, on peut vider la galerie
+  if (index === 0) galerie.innerHTML = '';
+
+  const batch = photosFiltrees.slice(index, index + batchSize);
+  batch.forEach(p => {
     galerie.innerHTML += `
       <div class="photo">
-        <img src="images/${p.fichier}" alt="${p.espece}">
+        <img src="images/${p.fichier}" alt="${p.espece}" loading="lazy">
         <p><strong>${p.espece}</strong></p>
         <p>${p.famille} | ${p.lieu} | ${p.date}</p>
       </div>
     `;
   });
+
+  index += batchSize;
 }
+
+// Détection scroll pour charger la suite
+window.addEventListener('scroll', () => {
+  if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
+    if (index < photosFiltrees.length) {
+      afficherPhotosBatch();
+    }
+  }
+});
 
 // Remplir filtres
 function remplirFiltres(data) {
@@ -45,10 +63,11 @@ function appliquerFiltres() {
   const valFamille = document.getElementById('filtre-famille').value;
   const valEspece = document.getElementById('filtre-espece').value;
 
-  const filtrées = photos.filter(p => {
+  photosFiltrees = photos.filter(p => {
     return (!valFamille || p.famille === valFamille) &&
            (!valEspece || p.espece === valEspece);
   });
 
-  afficherPhotos(filtrées);
+  index = 0; // reset index pour le lazy loading
+  afficherPhotosBatch();
 }
