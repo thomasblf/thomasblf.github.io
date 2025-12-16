@@ -10,6 +10,7 @@ fetch('data/photos.json')
     photos = data;
     photosFiltrees = photos; // au départ, toutes les photos sont visibles
     afficherPhotosBatch();   // affiche le premier batch
+    remplirEcran();          // s'assure que la page est remplie pour le scroll
     remplirFiltres(photos);
   });
 
@@ -34,9 +35,16 @@ function afficherPhotosBatch() {
   index += batchSize;
 }
 
+// Fonction pour remplir l'écran si trop peu de photos
+function remplirEcran() {
+  while (document.body.offsetHeight < window.innerHeight && index < photosFiltrees.length) {
+    afficherPhotosBatch();
+  }
+}
+
 // Détection scroll pour charger la suite
 window.addEventListener('scroll', () => {
-  if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
+  if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 10) {
     if (index < photosFiltrees.length) {
       afficherPhotosBatch();
     }
@@ -70,4 +78,5 @@ function appliquerFiltres() {
 
   index = 0; // reset index pour le lazy loading
   afficherPhotosBatch();
+  remplirEcran(); // s'assure que la page reste remplie après filtrage
 }
