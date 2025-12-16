@@ -1,23 +1,24 @@
 [
   {
-    "fichier": "o_mesangecharbonniere_fr_angers.jpg",
+    "fichier": "o_mesangecharbonniere_fr_angers.JPG",
     "date": "2024-06-15",
     "lieu": "Angers",
     "famille": "Oiseaux",
     "espece": "Mesange charbonniere"
   },
   {
-    "fichier": "o_mesangehuppee_fr_angers.jpg",
+    "fichier": "o_mesangehuppee_fr_angers.JPG",
     "date": "2023-09-02",
     "lieu": "Angers",
     "famille": "Oiseaux",
     "espece": "Mesange huppee"
   },
   {
-    "fichier": "o_tourterelleturque_fr_angers.jpg",
+    "fichier": "o_tourterelleturque_fr_angers.JPG",
     "date": "2024-04-10",
     "lieu": "Angers",
     "famille": "Oiseaux",
     "espece": "Tourterelle turque"
   }
 ]
+
